@@ -10,11 +10,11 @@ notifications:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y pdf2svg
-  - sudo apt-get install -y texlive-latex-base
-  - sudo apt-get install -y texlive-binaries
-  - sudo apt-get install -y texlive-pictures
-  - sudo apt-get install -y texlive-latex-extra
-  - sudo apt-get install -y texlive-xetex
+  - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
+  - sudo ./install-tl-ubuntu -p test/texlive.profile
+  - PATH=$PATH:/opt/texbin
+  - julia -v
+  - lualatex -v
 script:
   - julia -e 'using Pkg; Pkg.build(); Pkg.test(coverage=true)'
 after_success:
