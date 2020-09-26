@@ -20,8 +20,8 @@ save(SVG("../img/two_layer.svg"), nn)
 nn = TikzNeuralNetwork(input_size=3,
                        input_label=i->"\$x_{$i}\$",
                        hidden_layer_sizes=[2, 4, 3, 4],
-                       activation_functions=[L"\sigma", L"{\small $\phi$}", L"{\small $f$}", ""],
-                       hidden_layer_labels=["Sigmoid", "Gaussian", "ReLU", ""],
+                       activation_functions=[L"g", L"$\phi$", L"{\small $f$}", L"\sigma"],
+                       hidden_layer_labels=[L"\tanh", "softplus", "ReLU", "sigmoid"],
                        output_size=1,
                        output_label=i->L"\hat{y}")
 save(SVG("../img/deep.svg"), nn)
