@@ -2,7 +2,7 @@ using TikzNeuralNetworks
 
 nn = TikzNeuralNetwork(input_size=3,
                        hidden_layer_sizes=[4],
-                       hidden_layer_labels=["hidden"],
+                       activation_functions=["hidden"],
                        output_size=2)
 save(SVG("../img/standard.svg"), nn)
 
@@ -20,10 +20,11 @@ save(SVG("../img/two_layer.svg"), nn)
 nn = TikzNeuralNetwork(input_size=3,
                        input_label=i->"\$x_{$i}\$",
                        hidden_layer_sizes=[2, 4, 3, 4],
-                       activation_functions=[L"g", L"$\phi$", L"{\small $f$}", L"\sigma"],
-                       hidden_layer_labels=[L"\tanh", "softplus", "ReLU", "sigmoid"],
+                       activation_functions=[L"\tanh", "softplus", "ReLU", "sigmoid"],
+                       hidden_layer_labels=(h,i)->["{\\scriptsize\$a_{$j}^{[$h]}\$}" for j in 1:i],
                        output_size=1,
-                       output_label=i->L"\hat{y}")
+                       output_label=i->L"\hat{y}",
+                       node_size="24pt")
 save(SVG("../img/deep.svg"), nn)
 
 

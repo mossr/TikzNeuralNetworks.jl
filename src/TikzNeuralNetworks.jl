@@ -12,12 +12,13 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
     input_label::Function = i->string("input", input_size==1 ? "" : "\$_{$i}\$")
     input_arrows::Bool = true
     hidden_layer_sizes::Vector{Int} = [1]
+    hidden_layer_labels::Function = (h,i)->fill("", i) # a function with input (hidden layer index, node index within layer) that returns a vector for each hidden layer.
     activation_functions::Vector{String} = fill("", length(hidden_layer_sizes))
-    hidden_layer_labels::Vector{String} = fill("", length(hidden_layer_sizes))
     hidden_color::String = "lightgray!70"
     output_size::Int = 1
     output_label::Function = i->string("output", output_size==1 ? "" : "\$_{$i}\$")
     output_arrows::Bool = true
+    node_size::Union{String,Real} = "16pt"
     tikz::TikzPicture = TikzPicture("")
 
     function TikzNeuralNetwork(kwargs...)
@@ -41,7 +42,7 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
         end
 
         layer_sizes = [nn.input_size, nn.hidden_layer_sizes..., nn.output_size]
-        nnnode_style = "circle, draw=black, fill=white, minimum size=16pt"
+        nnnode_style = "circle, draw=black, fill=white, minimum size=$(nn.node_size)"
 
         # assumes fully connected
         for ls in 1:length(layer_sizes)-1
@@ -56,8 +57,8 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
                 elseif ishidden
                     node_styles[i] *= ", fill=$(nn.hidden_color)"
                     # add hidden layer label to top node
-                    if !isempty(nn.hidden_layer_labels[ls-1]) && i == pre_layer_idx[1]
-                        node_styles[i] *= ", label=above:{$(nn.hidden_layer_labels[ls-1])}"
+                    if !isempty(nn.activation_functions[ls-1]) && i == pre_layer_idx[1]
+                        node_styles[i] *= ", label=above:{$(nn.activation_functions[ls-1])}"
                     end
                 end
                 for j in post_layer_idx
@@ -84,7 +85,7 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
             end
         end
 
-        # inner node labels, fill hidden layers with `activation_functions`
+        # inner node labels, fill hidden layers with `hidden_layer_labels`
         node_tags = String[]
         if nn.input_arrows
             for i in 1:nn.input_size
@@ -95,7 +96,7 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
         push!(node_tags, fill("", nn.input_size)...)
 
         for (i,hs) in enumerate(nn.hidden_layer_sizes)
-            push!(node_tags, fill(nn.activation_functions[i], hs)...)
+            push!(node_tags, nn.hidden_layer_labels(i,hs)...)
         end
 
         push!(node_tags, fill("", nn.output_size)...)

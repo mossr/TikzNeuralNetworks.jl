@@ -37,10 +37,11 @@ nn = TikzNeuralNetwork(input_size=3,
 nn = TikzNeuralNetwork(input_size=3,
                        input_label=i->"\$x_{$i}\$",
                        hidden_layer_sizes=[2, 4, 3, 4],
-                       activation_functions=[L"g", L"$\phi$", L"{\small $f$}", L"\sigma"],
-                       hidden_layer_labels=[L"\tanh", "softplus", "ReLU", "sigmoid"],
+                       activation_functions=[L"\tanh", "softplus", "ReLU", "sigmoid"],
+                       hidden_layer_labels=(h,i)->["{\\scriptsize\$a_{$j}^{[$h]}\$}" for j in 1:i],
                        output_size=1,
-                       output_label=i->L"\hat{y}")
+                       output_label=i->L"\hat{y}",
+                       node_size="24pt")
 ```
 <p align="center"><img src="./img/deep.svg"></p>
 
@@ -63,15 +64,18 @@ nn = TikzNeuralNetwork(input_size=2,
     input_label::Function = i->string("input", input_size==1 ? "" : "\$_{$i}\$")
     input_arrows::Bool = true
     hidden_layer_sizes::Vector{Int} = [1]
+    hidden_layer_labels::Function = (h,i)->fill("", i)
     activation_functions::Vector{String} = fill("", length(hidden_layer_sizes))
-    hidden_layer_labels::Vector{String} = fill("", length(hidden_layer_sizes))
     hidden_color::String = "lightgray!70"
     output_size::Int = 1
     output_label::Function = i->string("output", output_size==1 ? "" : "\$_{$i}\$")
     output_arrows::Bool = true
+    node_size::Union{String,Real} = "16pt"
     tikz::TikzPicture = TikzPicture("")
 end
 ```
+
+Note that `hidden_layer_labels` is a function with input (`hidden layer index`, `node index within layer`) that returns a vector the size of the number of nodes within layer `h`.
 
 ## Saving
 Saving piggy-backs on [TikzPictures.jl](https://github.com/JuliaTeX/TikzPictures.jl).
