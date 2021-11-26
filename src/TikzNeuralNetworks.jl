@@ -2,7 +2,7 @@ module TikzNeuralNetworks
 
 using TikzGraphs
 using TikzPictures
-using LightGraphs
+using Graphs
 using Parameters
 
 export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str

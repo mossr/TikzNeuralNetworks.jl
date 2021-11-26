@@ -3,8 +3,7 @@ language: julia
 sudo: required
 dist: bionic
 julia:
-  - 1.3
-  - 1.5
+  - 1.6
 notifications:
   email: false
 before_install:
