@@ -1,6 +1,7 @@
 # TikzNeuralNetworks.jl
 
-[![Build Status](https://travis-ci.com/mossr/TikzNeuralNetworks.jl.svg?branch=master)](https://travis-ci.com/mossr/TikzNeuralNetworks.jl) [![codecov](https://codecov.io/github/mossr/TikzNeuralNetworks.jl/coverage.svg?branch=master)](https://codecov.io/gh/mossr/TikzNeuralNetworks.jl)
+[![Build Status](https://github.com/mossr/TikzNeuralNetworks.jl/workflows/CI/badge.svg)](https://github.com/mossr/TikzNeuralNetworks.jl/actions)
+[![codecov](https://codecov.io/gh/mossr/TikzNeuralNetworks.jl/branch/master/graph/badge.svg?token=btTBnBTQyw)](https://codecov.io/gh/mossr/TikzNeuralNetworks.jl)
 
 Visualize neural networks using TikZ in Julia. Uses [TikzGraphs.jl](https://github.com/JuliaTeX/TikzGraphs.jl) as a backend and outputs a [`TikzPicture`](https://github.com/JuliaTeX/TikzPictures.jl).
 
