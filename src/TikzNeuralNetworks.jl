@@ -19,6 +19,7 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
     output_label::Function = i->string("output", output_size==1 ? "" : "\$_{$i}\$")
     output_arrows::Bool = true
     node_size::Union{String,Real} = "16pt"
+    level_distance::Union{String,Real} = "15mm"
     tikz::TikzPicture = TikzPicture("")
 
     function TikzNeuralNetwork(kwargs...)
@@ -109,7 +110,7 @@ export TikzNeuralNetwork, save, PDF, TEX, SVG, @L_str
 
         nn.tikz = TikzGraphs.plot(g, Layouts.Layered(), node_tags,
                                   node_styles=node_styles,
-                                  options="grow'=right, level distance=15mm, sibling distance=2mm, semithick, >=stealth'")
+                                  options="grow'=right, level distance=$(nn.level_distance), sibling distance=2mm, semithick, >=stealth'")
         return nn
     end
 end
